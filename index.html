@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nokia Button OS – Premium UI</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}
+body{
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+#phone{
+width:340px;
+height:640px;
+background:#0b0f14;
+border-radius:38px;
+box-shadow:0 25px 60px rgba(0,0,0,.7);
+overflow:hidden;
+position:relative;
+color:#fff;
+}
+
+/* Status bar */
+.status{
+height:32px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 14px;
+font-size:13px;
+background:rgba(0,0,0,.4)
+}
+.status i{margin-left:6px}
+
+/* Screens */
+.screen{
+display:none;
+height:calc(100% - 32px);
+padding:16px;
+overflow-y:auto;
+}
+.screen.active{display:block}
+
+/* Lock */
+#lock{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+}
+#lock h1{font-size:52px;font-weight:300}
+#lock p{opacity:.7;margin:6px 0 30px}
+.unlock{
+padding:14px 28px;
+border-radius:22px;
+background:#007aff;
+cursor:pointer;
+}
+
+/* Home */
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
+}
+.app{
+background:linear-gradient(180deg,#1d2229,#14181e);
+border-radius:22px;
+padding:16px 8px;
+text-align:center;
+cursor:pointer;
+transition:.2s;
+}
+.app i{font-size:24px;margin-bottom:8px}
+.app:hover{transform:translateY(-4px)}
+
+/* Header */
+.header{
+display:flex;
+align-items:center;
+margin-bottom:16px;
+}
+.back{
+width:36px;height:36px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#1e242b;
+margin-right:10px;
+cursor:pointer;
+}
+
+/* Dial */
+.dial{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:14px;
+margin-top:20px;
+}
+.key{
+padding:20px 0;
+border-radius:50%;
+text-align:center;
+background:#1b2027;
+font-size:22px;
+cursor:pointer;
+}
+.call-btn{
+background:#34c759;
+padding:14px;
+border-radius:30px;
+margin-top:20px;
+text-align:center;
+cursor:pointer;
+}
+
+/* Settings */
+.setting{
+padding:14px;
+background:#1b2027;
+border-radius:16px;
+margin-bottom:10px;
+}
+</style>
+</head>
+
+<body>
+<div id="phone">
+
+<div class="status">
+<span>NOKIA</span>
+<span>
+<i class="fa fa-signal"></i>
+<i class="fa fa-wifi"></i>
+<i class="fa fa-battery-three-quarters"></i>
+</span>
+</div>
+
+<!-- Lock -->
+<div id="lock" class="screen active">
+<h1 id="time"></h1>
+<p id="date"></p>
+<div class="unlock" onclick="go('home')">Unlock</div>
+</div>
+
+<!-- Home -->
+<div id="home" class="screen">
+<h3 style="margin-bottom:14px">Apps</h3>
+<div class="grid">
+
+<div class="app" onclick="openApp('internal','phone')">
+<i class="fa fa-phone"></i>Phone</div>
+
+<div class="app" onclick="openApp('internal','messages')">
+<i class="fa fa-comment"></i>Messages</div>
+
+<div class="app" onclick="openApp('external',BASE+'facebook-lite/')">
+<i class="fab fa-facebook"></i>Facebook</div>
+
+<div class="app" onclick="openApp('external',BASE+'browser-lite/')">
+<i class="fa fa-globe"></i>Browser</div>
+
+<div class="app" onclick="openApp('internal','settings')">
+<i class="fa fa-cog"></i>Settings</div>
+
+<div class="app" onclick="openApp('internal','about')">
+<i class="fa fa-info-circle"></i>About</div>
+
+</div>
+</div>
+
+<!-- Phone -->
+<div id="phone" class="screen">
+<div class="header">
+<div class="back" onclick="go('home')"><i class="fa fa-arrow-left"></i></div>
+<h3>Dial</h3>
+</div>
+
+<div id="number" style="text-align:center;font-size:22px;margin-top:10px">---</div>
+
+<div class="dial">
+<div class="key" onclick="add('1')">1</div>
+<div class="key" onclick="add('2')">2</div>
+<div class="key" onclick="add('3')">3</div>
+<div class="key" onclick="add('4')">4</div>
+<div class="key" onclick="add('5')">5</div>
+<div class="key" onclick="add('6')">6</div>
+<div class="key" onclick="add('7')">7</div>
+<div class="key" onclick="add('8')">8</div>
+<div class="key" onclick="add('9')">9</div>
+<div class="key" onclick="add('*')">*</div>
+<div class="key" onclick="add('0')">0</div>
+<div class="key" onclick="add('#')">#</div>
+</div>
+
+<div class="call-btn">Call</div>
+</div>
+
+<!-- Messages -->
+<div id="messages" class="screen">
+<div class="header">
+<div class="back" onclick="go('home')"><i class="fa fa-arrow-left"></i></div>
+<h3>Messages</h3>
+</div>
+<div class="setting">Ahmed: hello 👋</div>
+<div class="setting">Mom: call me 📞</div>
+</div>
+
+<!-- Settings -->
+<div id="settings" class="screen">
+<div class="header">
+<div class="back" onclick="go('home')"><i class="fa fa-arrow-left"></i></div>
+<h3>Settings</h3>
+</div>
+<div class="setting">Wi-Fi</div>
+<div class="setting">Sound</div>
+<div class="setting">Display</div>
+<div class="setting">Battery</div>
+</div>
+
+<!-- About -->
+<div id="about" class="screen">
+<div class="header">
+<div class="back" onclick="go('home')"><i class="fa fa-arrow-left"></i></div>
+<h3>About</h3>
+</div>
+<p style="opacity:.7;margin-top:20px">
+Nokia Button OS<br>
+Premium Concept UI<br>
+Made by Alpraagood
+</p>
+</div>
+
+</div>
+
+<script>
+const BASE = "https://alpraagood-droid.github.io/nokia-button-os/";
+
+function go(id){
+document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+function openApp(type,target){
+if(type==="internal") go(target);
+else window.open(target,"_blank");
+}
+
+let num="";
+function add(n){
+num+=n;
+document.getElementById("number").innerText=num;
+}
+
+function time(){
+const d=new Date();
+document.getElementById("time").innerText=d.toLocaleTimeString([],{
+hour:'2-digit',minute:'2-digit'
+});
+document.getElementById("date").innerText=d.toDateString();
+}
+setInterval(time,1000);time();
+</script>
+</body>
+</html>
